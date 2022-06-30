@@ -1,13 +1,13 @@
 <?php
 ini_set("display_errors", "on");
 
-require_once'TipoDocumento.php';
-require_once'Sexo.php';
-require_once'Provincia.php';
-require_once'Usuario.php';
-require_once'Contacto.php';
+include_once 'TipoDocumento.php';
+include_once 'Sexo.php';
+include_once 'Provincia.php';
+include_once 'Usuario.php';
+include_once 'Contacto.php';
 
-class Persona{
+class Persona implements JsonSerializable{ //implements JsonSerializable
     private string $_apellido;
     private string $_nombre;
     private int $_numeroDocumento;
@@ -22,8 +22,11 @@ class Persona{
     private Provincia $_provincia;
     private string $_localidad;
     
-    //Crear atributo privado con tipo
-
+   
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
+    }
     
     
     public function __construct()
@@ -45,7 +48,7 @@ class Persona{
         $this->_telefono = $oTelefono;
         $this->_celular = $oCelular;
         $this->_nombre = " ";
-        $this->_apellidos = " ";
+        $this->_apellido = " ";
         $this->_numeroDocumento = 0;
         $this->_domicilio = " ";
     }

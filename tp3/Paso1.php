@@ -2,7 +2,7 @@
 ini_set("display_errors", "on");
 session_start();
 $_SERVER["DOCUMENT_ROOT"]=dirname(__DIR__);
-
+/* holaaaa */
 
 include_once 'Persona.php';
 

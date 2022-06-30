@@ -53,6 +53,12 @@ class Contacto
     public function verConstanteEmail(){
         return self::TIPO_EMAIL;
     }
+
+    //Metodo toString
+    public function __toString()
+    {
+        return $this->_tipo . " - " . $this->_valor;
+    }
 }
 
 // $oContacto1 = new Contacto(2, "maycolsantia@gmail.com");

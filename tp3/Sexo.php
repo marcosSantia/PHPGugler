@@ -21,7 +21,11 @@ class Sexo
         return $this->_descripcion;
     }
     
-    
+    //toString
+    public function __toString()
+    {
+        return $this->_idSexo . " - " . $this->_descripcion;
+    }
 }
 
 

@@ -38,6 +38,12 @@ class Usuario
     {
         return $this->_contrasenia;
     }
+
+    //Metodo toString
+    public function __toString()
+    {
+        return $this->_nombre . " - " . $this->_contrasenia;
+    }
 }
 
 // $oUsuario1 = new Usuario("maycol22","Espectriñ222o9");

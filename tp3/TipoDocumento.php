@@ -21,6 +21,22 @@ class TipoDocumento
         return $this->_descripcion;
     }
     
+    public function setIdTipoDocumento($idTipoDocumento)
+    {
+        $this->_idTipoDocumento = $idTipoDocumento;
+    }
+
+    public function setDescripcion($descripcion)
+    {
+        $this->_descripcion = $descripcion;
+    }
+
+
+    //Metodo toString
+    public function __toString()
+    {
+        return $this->_idTipoDocumento . " - " . $this->_descripcion;
+    }
 
 }
 

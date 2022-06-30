@@ -20,6 +20,11 @@ class Provincia
     {
         return $this->_descripcion;
     }
+
+    public function __toString()
+    {
+        return $this->_idProvincia . " - " . $this->_descripcion;
+    }
     
     
 }

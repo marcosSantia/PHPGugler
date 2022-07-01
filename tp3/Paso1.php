@@ -23,8 +23,12 @@ $aSexo[] = new Sexo('F','Femenino');
 
 /* CREO EL OBJETO PERSONA */
 $oPersona = new Persona();
+
+
+
+
 /* Creo una session llamada oPersona y le asigno el objeto $oPersona serializado (codificado) */
-$_SESSION['oPersona']=json_encode($oPersona);
+$_SESSION['oPersona']=($oPersona);
 
 if(isset($_SESSION['oPersona']) == false){
 	$_SESSION['oPersona']['_usuario']['_nombre'] = '';
@@ -37,10 +41,82 @@ if(isset($_SESSION['oPersona']) == false){
 	$_SESSION['oPersona']['_nacionalidad'] = '';
 }
 
-$oPersonaInformacionPersonal = $_SESSION['oPersona'];
+
+
+
+var_dump($_SESSION['oPersona']->getUsuario());
+$user = new Usuario('cosito123','cosito321');
+$_SESSION['oPersona']->setUsuario($user);
+var_dump($_SESSION['oPersona']->getUsuario());
+
+// object(Usuario)#18 (2) { ["_nombre":"Usuario":private]=> string(0) "" ["_contrasenia":"Usuario":private]=> string(0) "" } object(Usuario)#1 (2) { ["_nombre":"Usuario":private]=> string(9) "cosito123" ["_contrasenia":"Usuario":private]=> string(9) "cosito321" }
+
+
+
+
+// object(Usuario)#18 (2) { ["_nombre":"Usuario":private]=> string(0) "" ["_contrasenia":"Usuario":private]=> string(0) "" }
+// Fatal error: Uncaught TypeError: Persona::setUsuario(): Argument #1 ($oUsuario) must be of type Usuario, string given, called in /opt/lampp/htdocs/PHPGugler/tp3/Paso1.php on line 49 and defined in /opt/lampp/htdocs/PHPGugler/tp3/Persona.php:72 Stack trace: #0 /opt/lampp/htdocs/PHPGugler/tp3/Paso1.php(49): Persona->setUsuario('cosito12', 'coso323') #1 {main} thrown in /opt/lampp/htdocs/PHPGugler/tp3/Persona.php on line 72
+
+
+
+
+
+// object(Usuario)#18 (2) { ["_nombre":"Usuario":private]=> string(0) "" ["_contrasenia":"Usuario":private]=> string(0) "" }
+
+
+
+// object(Persona)#14 (12) 
+// { 
+// 	["_apellido":"Persona":private]=> string(1) " " 
+// 	["_nombre":"Persona":private]=> string(1) " " 
+// 	["_numeroDocumento":"Persona":private]=> int(0) 
+// 	["_tipoDocumento":"Persona":private]=> object(TipoDocumento)#15 (2) 
+// 	{ ["_idTipoDocumento":"TipoDocumento":private]=> string(0) "" ["_descripcion":"TipoDocumento":private]=> string(0) "" } 
+// 	["_sexo":"Persona":private]=> object(Sexo)#16 (2) 
+// 	{ ["_idSexo":"Sexo":private]=> string(0) "" ["_descripcion":"Sexo":private]=> string(0) "" } 
+// 	["_usuario":"Persona":private]=> object(Usuario)#18 (2) { ["_nombre":"Usuario":private]=> string(0) "" ["_contrasenia":"Usuario":private]=> string(0) "" } ["_nacionalidad":"Persona":private]=> string(0) "" ["_email":"Persona":private]=> object(Contacto)#19 (2) { ["_tipo":"Contacto":private]=> string(0) "" ["_valor":"Contacto":private]=> string(0) "" } ["_telefono":"Persona":private]=> object(Contacto)#20 (2) { ["_tipo":"Contacto":private]=> string(0) "" ["_valor":"Contacto":private]=> string(0) "" } ["_celular":"Persona":private]=> object(Contacto)#21 (2) { ["_tipo":"Contacto":private]=> string(0) "" ["_valor":"Contacto":private]=> string(0) "" } ["_domicilio":"Persona":private]=> string(1) " " ["_provincia":"Persona":private]=> object(Provincia)#17 (2) { ["_idProvincia":"Provincia":private]=> string(0) "" ["_descripcion":"Provincia":private]=> string(0) "" } ["_localidad":"Persona":private]=> uninitialized(string) }
+
+
+
+/* Fatal error: Uncaught Error: Cannot use object of type Persona as array in /opt/lampp/htdocs/PHPGugler/tp3/Paso1.php:47 Stack trace: #0 {main} thrown in /opt/lampp/htdocs/PHPGugler/tp3/Paso1.php on line 47 */
+
+
+
+// Fatal error: Uncaught Error: Cannot use object of type Persona as array in /opt/lampp/htdocs/PHPGugler/tp3/Paso1.php:47 Stack trace: #0 {main} thrown in /opt/lampp/htdocs/PHPGugler/tp3/Paso1.php on line 47
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // /* asigno la session a una variable y decodifico para obtener acceso mediante array */
-// $persona = json_decode($_SESSION['oPersona'] , true);
+// $persona = json_decode($_SESSION['oPersona'] , true); 
+// echo $persona->_apellido;
+
+// $oPersonaInformacionPersonal = $_SESSION['oPersona'];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // $nombreUsuario = $persona['_usuario']['_nombre']='maycolsdada';
 // $contraseniaUsuario = $persona['_usuario']['_contrasenia']='cosito123';

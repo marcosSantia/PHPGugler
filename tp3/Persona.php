@@ -7,7 +7,7 @@ include_once 'Provincia.php';
 include_once 'Usuario.php';
 include_once 'Contacto.php';
 
-class Persona implements JsonSerializable{ //implements JsonSerializable
+class Persona { //implements JsonSerializable
     private string $_apellido;
     private string $_nombre;
     private int $_numeroDocumento;
@@ -23,10 +23,10 @@ class Persona implements JsonSerializable{ //implements JsonSerializable
     private string $_localidad;
     
    
-    public function jsonSerialize()
-    {
-        return get_object_vars($this);
-    }
+    // public function jsonSerialize()
+    // {
+    //     return get_object_vars($this);
+    // }
     
     
     public function __construct()

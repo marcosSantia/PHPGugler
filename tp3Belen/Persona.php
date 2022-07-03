@@ -1,28 +1,31 @@
 <?php
 ini_set("display_errors", "on");
 
-include_once 'TipoDocumento.php';
-include_once 'Sexo.php';
-include_once 'Provincia.php';
-include_once 'Usuario.php';
-include_once 'Contacto.php';
+require_once'TipoDocumento.php';
+require_once'Sexo.php';
+require_once'Provincia.php';
+require_once'Usuario.php';
+require_once'Contacto.php';
 
-class Persona {
+class Persona{
     private string $_apellido;
     private string $_nombre;
     private int $_numeroDocumento;
-    private TipoDocumento $_tipoDocumento; 
-    private Sexo $_sexo; 
-    private Usuario $_usuario; 
+    private TipoDocumento $_tipoDocumento;
+    private Sexo $_sexo;
+    private Usuario $_usuario;
     private string $_nacionalidad;
-    private Contacto $_email; 
-    private Contacto $_telefono; 
+    private Contacto $_email;
+    private Contacto $_telefono;
     private Contacto $_celular;
     private string $_domicilio;
     private Provincia $_provincia;
     private string $_localidad;
     
+    //Crear atributo privado con tipo
 
+    
+    
     public function __construct()
     {
         $oTipoDocumento = new TipoDocumento('','');
@@ -42,15 +45,14 @@ class Persona {
         $this->_telefono = $oTelefono;
         $this->_celular = $oCelular;
         $this->_nombre = " ";
-        $this->_apellido = " ";
+        $this->_apellidos = " ";
         $this->_numeroDocumento = 0;
         $this->_domicilio = " ";
-        $this->_localidad = " ";
     }
     //SETTERS
     public function setApellido($apellido)
     {
-        $this->_apellido = $apellido;
+        $this-> _apellido = $apellido;
     }
     public function setNombre($nombre){
         $this->_nombre = $nombre;
@@ -64,6 +66,16 @@ class Persona {
     public function setSexo(Sexo $oSexo){
         $this->_sexo = $oSexo;
     }
+
+
+    public function setContrasenia(Usuario $contrasenia){
+        $this->_usuario->setContrasenia($contrasenia);
+    }
+
+    public function setNombreUsuario (Usuario $nombreUsuario) {
+        $this->_usuario-> setNombre($nombreUsuario);
+    }
+
     public function setUsuario(Usuario $oUsuario){
         $this->_usuario = $oUsuario;
     }
@@ -99,7 +111,9 @@ class Persona {
         return $this->_numeroDocumento;
     }
     public function getTipoDocumento(){
-        return $this->_tipoDocumento;
+        return $this->_tipoDocumento-> getDescripcion();
+        //VERRRR ACA
+
     }
     public function getSexo(){
         return $this->_sexo;
@@ -110,6 +124,15 @@ class Persona {
     public function getNacionalidad(){
         return $this->_nacionalidad;
     }
+
+    public function getContrasenia (){
+        return $this->_usuario->getContrasenia();
+    }
+
+    public function getNombreUsuario (){
+        return $this->_usuario->getNombre();
+    }
+
     public function getEmail(){
         return $this->_email;
     }
@@ -131,29 +154,12 @@ class Persona {
     //Metodo toString
     public function __toString()
     {
-        return "Persona: ".$this->_nombre." ".$this->_apellido." ".$this->_numeroDocumento." ".$this->_tipoDocumento." ".$this->_sexo." ".$this->_usuario." ".$this->_email." ".$this->_telefono." ".$this->_celular." ".$this->_domicilio." ".$this->_provincia." ".$this->_localidad." ";
+        return "Persona: ".$this->_nombre." ".$this->_apellido." ".$this->_numeroDocumento." ".$this->_tipoDocumento." ".$this->_sexo." ".$this->_usuario." ".$this->_email." ".$this->_telefono." ".$this->_celular." ".$this->_domicilio." ".$this->_provincia." ".$this->_localidad;
     }
     
 }
 
-// $oPersona = new Persona();
-// $oPersona->setApellido("Perez");
-// $oPersona->setNombre("Juan");
-// $oPersona->setNumeroDocumento(12345678);
-// $oPersona->setTipoDocumento(new TipoDocumento("DNI","Documento Nacional de Identidad"));
-// $oPersona->setSexo(new Sexo("M","Masculino"));
-// $oPersona->setUsuario(new Usuario("jperez","jperez"));
-// $oPersona->setNacionalidad("Argentina");
-// $oPersona->setEmail(new Contacto(2,'sadadsa@gmail.com'));
-// $oPersona->setTelefono(new Contacto(1,"1234567890"));
-// $oPersona->setCelular(new Contacto(1,"1234567890"));
-// $oPersona->setDomicilio("Av. Siempre Viva");
-// $oPersona->setProvincia(new Provincia("Buenos Aires","Buenos Aires"));
-// $oPersona->setLocalidad("La Plata");
 
-
-// $oPersona->__toString();
-// echo $oPersona;
 
 
 ?>

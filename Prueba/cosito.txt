@@ -1,0 +1,10 @@
+<option value="<?php echo ($_SESSION['oPersona']['_tipoDeDocumento']['_descripcionTipoDeDocumento'] == 'DNI') ? 'selected="selected"' : '' ;?>">DNI</option>
+<option value="<?php echo ($_SESSION['oPersona']['_tipoDeDocumento']['_descripcionTipoDeDocumento'] == 'LC') ? 'selected="selected"' : '' ;?>">LC</option>
+<option value="<?php echo ($_SESSION['oPersona']['_tipoDeDocumento']['_descripcionTipoDeDocumento'] == 'LE') ? 'selected="selected"' : '' ;?>">LE</option>
+
+
+
+
+                <option value="<?php echo ($aTipoDeDocumento[0]) ? 'selected="selected"' : '' ; ?>">DNI</option>
+                <option value="<?php echo ($aTipoDeDocumento[1]) ? 'selected="selected"' : '' ; ?>">LC</option>
+                <option value="<?php echo ($aTipoDeDocumento[2]) ? 'selected="selected"' : '' ; ?>">LE</option>

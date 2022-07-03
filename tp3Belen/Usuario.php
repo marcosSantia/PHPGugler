@@ -21,6 +21,18 @@ class Usuario
         }
     }
 
+    //setter
+    public function setNombre($nombre)
+    {
+        $this->_nombre = $nombre;
+    }
+
+    public function setContrasenia($contrasenia)
+    {
+        $this->_contrasenia = $contrasenia;
+    }
+
+
     public function  getContraseniaEnmascarada($contrasenia)
     {
         $this->_contrasenia = $contrasenia;
@@ -28,14 +40,12 @@ class Usuario
         return $contrasenia;
     }
 
-
-
-    public function getNombreUsuario()
+    public function getNombre()
     {
         return $this->_nombre;
     }
 
-    public function getPassword()
+    public function getContrasenia()
     {
         return $this->_contrasenia;
     }

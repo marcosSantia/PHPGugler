@@ -167,12 +167,12 @@ $aProvincias = array($oEntreRios,$oSantaFe,$oCordoba,$oBuenosAires,$oCatamarca,$
 				<li><label>Provincia:</label></li>
 				<li>
 					<select name="provincia">
-						<option value="<?php echo ( $aProvincias[0]->getDescripcion) ; ?> " >Entre Rios</option>
-						<option value="<?php echo ( $aProvincias[1]->getDescripcion) ; ?>"  >Santa Fe</option>
-						<option value="<?php echo ( $aProvincias[2]->getDescripcion) ; ?>"  >Cordoba</option>
-						<option value="<?php echo ( $aProvincias[3]->getDescripcion) ; ?>"  >Buenos Aires</option>
-						<option value="<?php echo ( $aProvincias[4]->getDescripcion) ; ?>"  >Catamarca</option>
-						<option value="<?php echo ( $aProvincias[5]->getDescripcion) ; ?>"  >Corrientes</option>
+						<option value="<?php echo ( $aProvincias[0]->getDescripcion()) ; ?> " >Entre Rios</option>
+						<option value="<?php echo ( $aProvincias[1]->getDescripcion()) ; ?>"  >Santa Fe</option>
+						<option value="<?php echo ( $aProvincias[2]->getDescripcion()) ; ?>"  >Cordoba</option>
+						<option value="<?php echo ( $aProvincias[3]->getDescripcion()) ; ?>"  >Buenos Aires</option>
+						<option value="<?php echo ( $aProvincias[4]->getDescripcion()) ; ?>"  >Catamarca</option>
+						<option value="<?php echo ( $aProvincias[5]->getDescripcion()) ; ?>"  >Corrientes</option>
 					</select>
 				</li>
 				

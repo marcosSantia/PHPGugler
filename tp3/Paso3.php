@@ -1,22 +1,72 @@
 <?php 
 ini_set("display_errors", "on");
-
+include_once 'Persona.php';
 session_start();
 
-$informacionContacto = null;
+
 
 if ( isset($_POST['bt_paso2']) == true )
 {
-	$_SESSION['informacion_contacto']['email'] = ( isset($_POST['email']) == true ) ? $_POST['email'] : '';
-	$_SESSION['informacion_contacto']['telefono'] = ( isset($_POST['telefono']) == true ) ? $_POST['telefono'] : '';
-	$_SESSION['informacion_contacto']['celular'] = ( isset($_POST['celular']) == true ) ? $_POST['celular'] : '';
-	$_SESSION['informacion_contacto']['domicilio'] = ( isset($_POST['domicilio']) == true ) ? $_POST['domicilio'] : '';
-	$_SESSION['informacion_contacto']['provincia'] = ( isset($_POST['provincia']) == true ) ? $_POST['provincia'] : '';
-	$_SESSION['informacion_contacto']['localidad'] = ( isset($_POST['localidad']) == true ) ? $_POST['localidad'] : '';
+	$email = ( isset($_POST['email']) == true ) ? $_POST['email'] : '';
+
+	$telefono = ( isset($_POST['telefono']) == true ) ? $_POST['telefono'] : '';
+
+	$celular = ( isset($_POST['celular']) == true ) ? $_POST['celular'] : '';
+
+	$domicilio = ( isset($_POST['domicilio']) == true ) ? $_POST['domicilio'] : '';
+
+	$eleccionProvincia = ( isset($_POST['provincia']) == true ) ? $_POST['provincia'] : '';
+
+	$localidad = ( isset($_POST['localidad']) == true ) ? $_POST['localidad'] : '';
+}
+////////////////////////////////////////////////////////////
+$oEmail=new Contacto(2,$email);
+$_SESSION['oPersona']->setEmail($oEmail);
+
+$oTelefono=new Contacto(1,$telefono);
+$_SESSION['oPersona']->setTelefono($oTelefono);
+
+$oCelular=new Contacto(2,$celular);
+$_SESSION['oPersona']->setCelular($oCelular);
+
+$_SESSION['oPersona']->setDomicilio($domicilio);
+
+
+////////////////////////////////////////////////////////////
+//Creo el array tipoProvincia con las provncias dentro
+$oEntreRios = new Provincia(1,'Entre Rios');
+$oSantaFe = new Provincia(2,'Santa Fe');
+$oCordoba = new Provincia(3,'Cordoba');
+$oBuenosAires = new Provincia(4,'Buenos Aires');
+$oCatamarca = new Provincia(5,'Catamarca');
+$oCorrientes = new Provincia(6,'Corrientes');
+$aProvincias = array($oEntreRios,$oSantaFe,$oCordoba,$oBuenosAires,$oCatamarca,$oCorrientes);
+
+if($eleccionProvincia=='Entre Rios'){
+	$_SESSION['oPersona']->setProvincia($oEntreRios);
+}elseif ($eleccionProvincia == 'Santa Fe') {
+	$_SESSION['oPersona']->setProvincia($oSantaFe);
+}elseif($eleccionProvincia=='Cordoba'){
+	$_SESSION['oPersona']->setProvincia($oCordoba);
+}elseif($eleccionProvincia=='Buenos Aires'){
+	$_SESSION['oPersona']->setProvincia($oBuenosAires);
+}elseif($eleccionProvincia=='Catamarca'){
+	$_SESSION['oPersona']->setProvincia($oCatamarca);
+}elseif($eleccionProvincia=='Corrientes'){
+	$_SESSION['oPersona']->setProvincia($oCorrientes);
 }
 
-$informacionPersonal = $_SESSION['informacion_personal'];
-$informacionContacto = $_SESSION['informacion_contacto'];
+////////////////////////////////////////////////////////////
+$_SESSION['oPersona']->setLocalidad($localidad);
+////////////////////////////////////////////////////////////
+
+$oUsuario = ($_SESSION['oPersona']->getUsuario());
+$password = $oUsuario->getPassword();
+
+
+
+
+
 
 ?>
 <!DOCTYPE html>
@@ -32,62 +82,64 @@ $informacionContacto = $_SESSION['informacion_contacto'];
 
 	<?php require_once 'includes/php/header.php'; ?>
 	
-	<h2>Informaci&oacute;n de alta de usuario</h2>
+	<h2>Informacion de alta de usuario</h2>
 	
 	<div class="ultimo_paso">
 		
 		<fieldset>
-			<legend>Informaci&oacute;n Personal:</legend>
+			<legend>Informacion Personal:</legend>
 			
 			<ul>
 				<li><label>Nombre de Usuario:</label></li>
-				<li><?php echo $informacionPersonal['nombre_usuario']; ?><br></li>
+				<li><?php echo (($_SESSION['oPersona']->getUsuario())->getNombreUsuario()); ?><br></li>
 				
-				<li><label>Contrase&ntilde;a:</label></li>
-				<li><?php echo str_repeat('*', strlen($informacionPersonal['contrasenia'])); ?><br></li>
+				<li><label>Contraseña:</label></li>
+				<li><?php 
+				echo ($oUsuario->getContraseniaEnmascarada($password)); 
+				?><br></li>
 				
 				<li><label>Apellido:</label></li>
-				<li><?php echo $informacionPersonal['apellido']; ?></li>
+				<li><?php echo $_SESSION['oPersona']->getApellido(); ?></li>
 				
 				<li><label>Nombre:</label></li>
-				<li><?php echo $informacionPersonal['nombre']; ?></li>
+				<li><?php echo $_SESSION['oPersona']->getNombre(); ?></li>
 				
 				<li><label>Tipo de Documento:</label></li>
-				<li><?php echo $informacionPersonal['tipo_documento']; ?></li>
+				<li><?php echo ($_SESSION['oPersona']->getTipoDocumento())->getDescripcion(); ?></li>
 				
-				<li><label>N&uacute;mero de Documento:</label></li>
-				<li><?php echo $informacionPersonal['numero_documento']; ?></li>
+				<li><label>Numero de Documento:</label></li>
+				<li><?php echo $_SESSION['oPersona']->getNumeroDocumento(); ?></li>
 				
 				<li><label>Sexo:</label></li>
-				<li><?php echo $informacionPersonal['sexo']; ?></li>
+				<li><?php echo ($_SESSION['oPersona']->getSexo())->getDescripcion(); ?></li>
 				
 				<li><label>Nacionalidad:</label></li>
-				<li><?php echo $informacionPersonal['nacionalidad']; ?></li>
+				<li><?php echo $_SESSION['oPersona']->getNacionalidad(); ?></li>
 			</ul>
 			
 		</fieldset>
 		
 		<fieldset>
-			<legend>Informaci&oacute;n de Contacto:</legend>
+			<legend>Informacion de Contacto:</legend>
 			
 			<ul>
-				<li><label>Correo electr&oacute;nico:</label></li>
-				<li><?php echo $informacionContacto['email']; ?></li>
+				<li><label>Correo electronico:</label></li>
+				<li><?php echo ($_SESSION['oPersona']->getEmail()); ?></li>
 				
-				<li><label>Tel&eacute;fono:</label></li>
-				<li><?php echo $informacionContacto['telefono']; ?></li>
+				<li><label>Telefono:</label></li>
+				<li><?php echo $_SESSION['oPersona']->getTelefono(); ?></li>
 				
 				<li><label>Celular:</label></li>
-				<li><?php echo $informacionContacto['celular']; ?></li>
+				<li><?php echo ($_SESSION['oPersona']->getCelular()); ?></li>
 				
 				<li><label>Domicilio:</label></li>
-				<li><?php echo $informacionContacto['domicilio']; ?></li>
+				<li><?php echo $_SESSION['oPersona']->getDomicilio(); ?></li>
 				
 				<li><label>Provincia:</label></li>
-				<li><?php echo $informacionContacto['provincia']; ?></li>
+				<li><?php echo ($_SESSION['oPersona']->getProvincia())->getDescripcion(); ?></li>
 				
 				<li><label>Localidad:</label></li>
-				<li><?php echo $informacionContacto['localidad']; ?></li>
+				<li><?php echo $_SESSION['oPersona']->getLocalidad(); ?></li>
 			</ul>
 			
 		</fieldset>

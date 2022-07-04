@@ -4,17 +4,14 @@ session_start();
 $_SERVER["DOCUMENT_ROOT"]=dirname(__DIR__);
 include_once 'Persona.php';
 // include_once 'TipoDocumento.php';
-// include_once 'Persona.php';
-// include_once 'Usuario.php';
-// include_once 'Sexo.php';
-// include_once 'Contacto.php';
+
 ////////////////////////////////////////////////////////////////////////////
 /* CREO EL OBJETO PERSONA */
 $oPersona = new Persona();
 /* Creo una session llamada oPersona y le asigno el objeto $oPersona*/
 $_SESSION['oPersona']=($oPersona);
 ////////////////////////////////////////////////////////////////////////////
-/* Creo el objeto usuario para asignarle lo que se encuentra dentro del Opersona que esta vacio */
+
 $oUsuario = $_SESSION['oPersona']->getUsuario();
 $nombreUsuario = ($oUsuario->getNombreUsuario());
 $passwordUsuario = ($oUsuario->getPassword());
@@ -41,11 +38,6 @@ $aSexo = array($oMasculino,$oFemenino);
 // var_dump($_SESSION['oPersona']->getUsuario());
 
 
-/* <select name="tipo_documento">
-						<option value="<?php echo ($aTipoDocumento[0]) ? 'selected="selected"' : '' ; ?>"  > DNI</option>
-						<option value="<?php echo ( $aTipoDocumento[1] ) ? 'selected="selected"' : '' ; ?>"  >LC</option>
-						<option value="<?php echo ( $aTipoDocumento[2] ) ? 'selected="selected"' : '' ; ?>"  >LE</option>
-					</select> */
 ?>
 <!DOCTYPE html>
 <html>
@@ -70,7 +62,7 @@ $aSexo = array($oMasculino,$oFemenino);
 				<li><label>Contraseña:</label></li>
 				<li><input 
 				
-				title="Al menos 6 caracteres, y al menos un número"
+				title="Al menos 6 caracteres, y al menos un número y una letra"
 				required 
 				type="password" 
 				name="contrasenia" 

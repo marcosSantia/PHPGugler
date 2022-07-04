@@ -3,7 +3,11 @@ ini_set("display_errors", "on");
 include_once 'Persona.php';
 session_start();
 
+$_SESSION['oPersona'] = (isset($_SESSION['oPersona']) == false) ? new Persona() : $_SESSION['oPersona'];
 
+$validarEmail=false;
+$validarTelefono=false;
+$validarCelular=false;
 
 if ( isset($_POST['bt_paso2']) == true )
 {
@@ -20,14 +24,25 @@ if ( isset($_POST['bt_paso2']) == true )
 	$localidad = ( isset($_POST['localidad']) == true ) ? $_POST['localidad'] : '';
 }
 ////////////////////////////////////////////////////////////
-$oEmail=new Contacto(2,$email);
-$_SESSION['oPersona']->setEmail($oEmail);
+$oEmail=new Contacto(Contacto::TIPO_EMAIL,$email);
+if($oEmail->validar()==true){
+	$_SESSION['oPersona']->setEmail($oEmail);
+	$validarEmail = true;
+}
 
-$oTelefono=new Contacto(1,$telefono);
-$_SESSION['oPersona']->setTelefono($oTelefono);
 
-$oCelular=new Contacto(2,$celular);
-$_SESSION['oPersona']->setCelular($oCelular);
+$oTelefono=new Contacto(Contacto::TIPO_TELEFONO,$telefono);
+if($oTelefono->validar()== true){
+	$_SESSION['oPersona']->setTelefono($oTelefono);
+	$validarTelefono=true;
+}
+
+$oCelular=new Contacto(Contacto::TIPO_TELEFONO,$celular);
+if($oCelular->validar()==true){
+	$_SESSION['oPersona']->setCelular($oTelefono);
+	$validarCelular=true;
+}
+
 
 $_SESSION['oPersona']->setDomicilio($domicilio);
 
@@ -82,78 +97,101 @@ $password = $oUsuario->getPassword();
 
 	<?php require_once 'includes/php/header.php'; ?>
 	
-	<h2>Informacion de alta de usuario</h2>
-	
-	<div class="ultimo_paso">
-		
-		<fieldset>
-			<legend>Informacion Personal:</legend>
-			
+	<?php if($validarEmail == false || $validarCelular ==false || $validarTelefono == false) { ?>
+		<div class="mensaje">
+			<h3>Existen algunos errores al procesar la información ingresada</h3>
 			<ul>
-				<li><label>Nombre de Usuario:</label></li>
-				<li><?php echo (($_SESSION['oPersona']->getUsuario())->getNombreUsuario()); ?><br></li>
-				
-				<li><label>Contraseña:</label></li>
-				<li><?php 
-				echo ($oUsuario->getContraseniaEnmascarada($password)); 
-				?><br></li>
-				
-				<li><label>Apellido:</label></li>
-				<li><?php echo $_SESSION['oPersona']->getApellido(); ?></li>
-				
-				<li><label>Nombre:</label></li>
-				<li><?php echo $_SESSION['oPersona']->getNombre(); ?></li>
-				
-				<li><label>Tipo de Documento:</label></li>
-				<li><?php echo ($_SESSION['oPersona']->getTipoDocumento())->getDescripcion(); ?></li>
-				
-				<li><label>Numero de Documento:</label></li>
-				<li><?php echo $_SESSION['oPersona']->getNumeroDocumento(); ?></li>
-				
-				<li><label>Sexo:</label></li>
-				<li><?php echo ($_SESSION['oPersona']->getSexo())->getDescripcion(); ?></li>
-				
-				<li><label>Nacionalidad:</label></li>
-				<li><?php echo $_SESSION['oPersona']->getNacionalidad(); ?></li>
+				<?php if ( $validarEmail == false ) { ?>
+					<li>El correo electrónico no es válido. Debe contener un símbolo "@"</li>
+				<?php } if ( $validarTelefono == false ) { ?>
+					<li>El teléfono no es válido. Debe contener al menos 10 dígitos y estar separado por un "-"</li>
+				<?php } if ( $validarCelular == false ) { ?>
+					<li>El celular no es válido. Debe contener al menos 10 dígitos y estar separado por un "-"</li>
+				<?php } ?>
 			</ul>
-			
-		</fieldset>
-		
-		<fieldset>
-			<legend>Informacion de Contacto:</legend>
-			
-			<ul>
-				<li><label>Correo electronico:</label></li>
-				<li><?php echo ($_SESSION['oPersona']->getEmail()); ?></li>
-				
-				<li><label>Telefono:</label></li>
-				<li><?php echo $_SESSION['oPersona']->getTelefono(); ?></li>
-				
-				<li><label>Celular:</label></li>
-				<li><?php echo ($_SESSION['oPersona']->getCelular()); ?></li>
-				
-				<li><label>Domicilio:</label></li>
-				<li><?php echo $_SESSION['oPersona']->getDomicilio(); ?></li>
-				
-				<li><label>Provincia:</label></li>
-				<li><?php echo ($_SESSION['oPersona']->getProvincia())->getDescripcion(); ?></li>
-				
-				<li><label>Localidad:</label></li>
-				<li><?php echo $_SESSION['oPersona']->getLocalidad(); ?></li>
-			</ul>
-			
-		</fieldset>
-		
-		<fieldset>
-		
 			<div class="buttons">
-				<input type="button" value="Guardar" onclick="document.location='Finalizar.php'">
 				<input type="button" value="Anterior" onclick="document.location='Paso2.php'">
 			</div>
-			
-		</fieldset>
+		</div>		
+	<?php } else { ?>
+		<h2>Informacion de alta de usuario</h2>
 		
-	</div>
+		<div class="ultimo_paso">
+			
+			<fieldset>
+				<legend>Informacion Personal:</legend>
+				
+				<ul>
+					<li><label>Nombre de Usuario:</label></li>
+					<li><?php echo (($_SESSION['oPersona']->getUsuario())->getNombreUsuario()); ?><br></li>
+					
+					<li><label>Contraseña:</label></li>
+					<li><?php 
+					echo ($oUsuario->getContraseniaEnmascarada($password)); 
+					?><br></li>
+					
+					<li><label>Apellido:</label></li>
+					<li><?php echo $_SESSION['oPersona']->getApellido(); ?></li>
+					
+					<li><label>Nombre:</label></li>
+					<li><?php echo $_SESSION['oPersona']->getNombre(); ?></li>
+					
+					<li><label>Tipo de Documento:</label></li>
+					<li><?php echo ($_SESSION['oPersona']->getTipoDocumento())->getDescripcion(); ?></li>
+					
+					<li><label>Numero de Documento:</label></li>
+					<li><?php echo $_SESSION['oPersona']->getNumeroDocumento(); ?></li>
+					
+					<li><label>Sexo:</label></li>
+					<li><?php echo ($_SESSION['oPersona']->getSexo())->getDescripcion(); ?></li>
+					
+					<li><label>Nacionalidad:</label></li>
+					<li><?php echo $_SESSION['oPersona']->getNacionalidad(); ?></li>
+				</ul>
+				
+			</fieldset>
+			
+			<fieldset>
+				<legend>Informacion de Contacto:</legend>
+				
+				<ul>
+					<li><label>Correo electronico:</label></li>
+					<li><?php echo ($_SESSION['oPersona']->getEmail()); ?></li>
+					
+					<li><label>Telefono:</label></li>
+					<li><?php echo $_SESSION['oPersona']->getTelefono(); ?></li>
+					
+					<li><label>Celular:</label></li>
+					<li><?php echo ($_SESSION['oPersona']->getCelular()); ?></li>
+					
+					<li><label>Domicilio:</label></li>
+					<li><?php echo $_SESSION['oPersona']->getDomicilio(); ?></li>
+					
+					<li><label>Provincia:</label></li>
+					<li><?php echo ($_SESSION['oPersona']->getProvincia())->getDescripcion(); ?></li>
+					
+					<li><label>Localidad:</label></li>
+					<li><?php echo $_SESSION['oPersona']->getLocalidad(); ?></li>
+				</ul>
+				
+			</fieldset>
+			
+			<fieldset>
+			
+				<div class="buttons">
+					<input type="button" value="Guardar" onclick="document.location='Finalizar.php'">
+					<input type="button" value="Anterior" onclick="document.location='Paso2.php'">
+				</div>
+				
+			</fieldset>
+			
+		</div>
+
+
+
+	<?php } ?>
+
+
 	
 	<div class="push"></div>
 	

@@ -12,9 +12,9 @@ class Usuario
     }
 
     //Metodo para validar contraseña con al menos 6 caracteres y un numero y una letra
-    public function validarContrasenia($contrasenia)
+    public function validarContrasenia()
     {
-        if(!preg_match("/^[a-zA-ZñÑ0-9]{6,25}$/",$contrasenia)){
+        if(!preg_match(" /^[a-zA-ZñÑ0-9]{6,25}$/ ", $this->_contrasenia)){
             return false;
         }else{
             return true;

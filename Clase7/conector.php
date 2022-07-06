@@ -1,14 +1,12 @@
-<?
+<?php
 
-ini_set('display_errors', 'on');
+ini_set('display_errors', 1);
 
-$dsn='mysql:dbname=prueba;host=localhost;port=3306';
+$dsn='mysql:host=localhost;dbname=pruebaPDO;port=3306';
 $usuario='root';
 $pw='';
 
 $dbh=new PDO($dsn,$usuario,$pw);
 
-
-var_dump($dbh);
 
 ?>
